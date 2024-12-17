@@ -1,5 +1,5 @@
 "use client";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -28,7 +28,7 @@ const chartConfig = {
 
 export function GrowthChart() {
   return (
-    <Card className="w-full h-full bg-transparent border-none">
+    <Card className="w-full h-full bg-inherit border-none">
       <CardHeader>
         <CardDescription className="text-lg font-semibold text-white mb-4 opacity-85">
           Showing total commits per year
@@ -44,14 +44,22 @@ export function GrowthChart() {
               right: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={true} />
+            <YAxis
+              tickLine={false}
+              axisLine={true}
+              tickMargin={8}
+              tickFormatter={(value) => value}
+              color="#000000"
+              dataKey={"desktop"}
+            />
             <XAxis
               dataKey="year"
               tickLine={false}
               axisLine={true}
               tickMargin={8}
               tickFormatter={(value) => value}
-              color="#FFFFFF"
+              color="#000000"
             />
             <ChartTooltip
               cursor={false}
@@ -61,7 +69,7 @@ export function GrowthChart() {
               dataKey="desktop"
               type="natural"
               fill="var(--color-desktop)"
-              fillOpacity={0.4}
+              fillOpacity={0.6}
               stroke="var(--color-desktop)"
             />
           </AreaChart>

@@ -21,7 +21,19 @@ body {
   background-size: 200% 200%;
   animation: gradient 15s ease infinite;
 }
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
 
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
