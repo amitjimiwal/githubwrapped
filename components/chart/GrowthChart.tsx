@@ -1,23 +1,12 @@
 "use client";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { year: "2021", desktop: 186 },
-  { year: "2022", desktop: 305 },
-  { year: "2023", desktop: 237 },
-  { year: "2024", desktop: 73 },
-];
 
 const chartConfig = {
   desktop: {
@@ -26,19 +15,25 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function GrowthChart() {
+export function GrowthChart({
+  data,
+}: {
+  data: { year: number; contributions: number }[];
+}) {
+  const refineData = data
+    .map((d) => ({
+      year: d.year.toString(),
+      contributions: d.contributions,
+    }))
+    .reverse();
   return (
     <Card className="w-full h-full bg-inherit border-none">
-      <CardHeader>
-        <CardDescription className="text-lg font-semibold text-white mb-4 opacity-85">
-          Showing total commits per year
-        </CardDescription>
-      </CardHeader>
+      <CardHeader></CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={refineData}
             margin={{
               left: 12,
               right: 12,
@@ -51,7 +46,7 @@ export function GrowthChart() {
               tickMargin={8}
               tickFormatter={(value) => value}
               color="#000000"
-              dataKey={"desktop"}
+              dataKey={"contributions"}
             />
             <XAxis
               dataKey="year"
@@ -66,7 +61,7 @@ export function GrowthChart() {
               content={<ChartTooltipContent indicator="line" />}
             />
             <Area
-              dataKey="desktop"
+              dataKey="contributions"
               type="natural"
               fill="var(--color-desktop)"
               fillOpacity={0.6}

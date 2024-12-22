@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "avatar.iran.liara.run",
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: "avatars.githubusercontent.com",
+        port: '',
+      }
     ],
   },
 };

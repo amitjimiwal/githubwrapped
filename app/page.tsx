@@ -1,5 +1,9 @@
 import UserRecapCard from "@/components/UserRecapCard";
 
 export default function Home() {
-  return <UserRecapCard />;
+  return (
+    <>
+      <UserRecapCard />
+    </>
+  );
 }
