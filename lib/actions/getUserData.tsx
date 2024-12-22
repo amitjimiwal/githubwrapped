@@ -21,7 +21,6 @@ export async function getUserData(name: string) {
       100;
     const repositoriesData = await GetRepositoriesData(name);
     const topLanguages = getTopLanguages(repositoriesData, 2024);
-    console.log(userData?.avatar_url);
     const topStarredRepos = getMostStarredRepository(repositoriesData, 2024);
     return {
       success: true,
