@@ -4,7 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ErrorPage from "./error";
+import { ArrowLeftToLine } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import DownloadButton from "@/components/DownloadButton";
+import ReloadButton from "@/components/ReloadButton";
 
 const page = async ({
   searchParams,
@@ -120,26 +128,28 @@ const page = async ({
                     Top Languages
                   </h3>
                   <div className="space-y-2">
-                    {timeout.topLanguages.map((lang, index) => (
-                      <div key={lang.language} className="relative">
-                        <div className="flex justify-between text-xs text-white mb-1">
-                          <span>{lang.language}</span>
-                          <span>{lang.percentage}%</span>
+                    {timeout.topLanguages
+                      .filter((lang) => lang.language != "")
+                      .map((lang, index) => (
+                        <div key={lang.language} className="relative">
+                          <div className="flex justify-between text-xs text-white mb-1">
+                            <span>{lang.language}</span>
+                            <span>{lang.percentage}%</span>
+                          </div>
+                          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full ${
+                                index === 0
+                                  ? "bg-purple-500"
+                                  : index === 1
+                                  ? "bg-blue-500"
+                                  : "bg-green-500"
+                              }`}
+                              style={{ width: `${lang.percentage}%` }}
+                            ></div>
+                          </div>
                         </div>
-                        <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${
-                              index === 0
-                                ? "bg-purple-500"
-                                : index === 1
-                                ? "bg-blue-500"
-                                : "bg-green-500"
-                            }`}
-                            style={{ width: `${lang.percentage}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>
@@ -196,18 +206,41 @@ const page = async ({
             </div>
           </div>
         </section>
-        <div className="mb-20 flex justify-center items-center gap-3">
-          <DownloadButton targetId="wrap" name={name} />
-          <div>
-            <Link
-              href="https://x.com/intent/tweet?text=I%20generated%20my%202024%20wrapped.%20Generate%20your%27s%20now%20!&url=https%3A%2F%2Fwrappedcode.vercel.app%2F&hashtags=githubwrapped"
-              className="inline-flex items-center sm:px-4 sm:py-2 p-1 bg-blue-400 hover:bg-blue-500 text-white text-sm transition-colors duration-300 shadow-lg hover:shadow-xl rounded font-bold"
-              target="_blank"
-            >
-              Share on X
-            </Link>
+        {/* footer Buttons Section */}
+        <TooltipProvider>
+          <div className="mb-20 flex justify-center items-center gap-3">
+            <Tooltip>
+              <TooltipTrigger>
+                <Link href={"/"}>
+                  <div className="p-2 bg-purple-500 rounded-full hover:bg-purple-700 transition-colors duration-300">
+                    <ArrowLeftToLine size={24} className="text-white" />
+                  </div>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent className="bg-white text-black p-2 rounded-lg">
+                <p>Go back</p>
+              </TooltipContent>
+            </Tooltip>
+            <DownloadButton targetId="wrap" name={name} />
+            <div>
+              <Link
+                href="https://x.com/intent/tweet?text=I%20generated%20my%202024%20wrapped.%20Generate%20your%27s%20now%20!&url=https%3A%2F%2Fwrappedcode.vercel.app%2F&hashtags=githubwrapped"
+                className="inline-flex items-center sm:px-4 sm:py-2 p-1 bg-blue-400 hover:bg-blue-500 text-white text-sm transition-colors duration-300 shadow-lg hover:shadow-xl rounded font-bold"
+                target="_blank"
+              >
+                Share on X
+              </Link>
+            </div>
+            <Tooltip>
+              <TooltipTrigger>
+                <ReloadButton />
+              </TooltipTrigger>
+              <TooltipContent className="bg-white text-black p-2 rounded-lg">
+                <p>regenerate</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
-        </div>
+        </TooltipProvider>
       </div>
     </div>
   );
